@@ -51,9 +51,9 @@ model = get_model()
 
 #TREINAMENTO
 history = model.fit(X_train, y_train, 
-                    batch_size = 30, 
+                    batch_size = 16, 
                     verbose=1, 
-                    epochs=70, 
+                    epochs=50, 
                     validation_data=(X_test, y_test), 
                     shuffle=False)
 
@@ -66,10 +66,9 @@ model.save('shearograph_segmentation2.hdf5')
 ##################################
 #IOU
 y_pred=model.predict(X_test)
-y_pred_thresholded = y_pred > 0.5
 
-intersection = np.logical_and(y_test, y_pred_thresholded)
-union = np.logical_or(y_test, y_pred_thresholded)
+intersection = np.logical_and(y_test, y_pred)
+union = np.logical_or(y_test, y_pred)
 iou_score = np.sum(intersection) / np.sum(union)
 print("IoU socre is: ", iou_score)
 
